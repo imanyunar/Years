@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symphony for Aziziiii ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Libre+Baskerville&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --royal-red: #4c0519;
+            --gold-bright: #fbbf24;
+            --gold-dark: #b45309;
+            --velvet: #020617;
+        }
+
+        body, html {
+            height: 100%; margin: 0;
+            background-color: var(--velvet);
+            font-family: 'Libre Baskerville', serif;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        .font-romantic { font-family: 'Dancing Script', cursive; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+
+        /* --- Background --- */
+        .stage-bg {
+            position: fixed; inset: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(251, 191, 36, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(76, 5, 25, 0.3) 0%, transparent 50%),
+                #020617;
+            z-index: -1;
+            animation: spotlightMove 10s ease-in-out infinite alternate;
+        }
+        @keyframes spotlightMove {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        /* --- Envelope & Effects --- */
+        .envelope-wrapper {
+            position: relative;
+            width: 300px; height: 200px;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+            /* Efek Aura Berdenyut pada Wrapper */
+            animation: envelopePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes envelopePulse {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.3)); }
+            50% { filter: drop-shadow(0 0 40px rgba(251, 191, 36, 0.6)); }
+        }
+
+        @media (min-width: 768px) {
+            .envelope-wrapper { width: 450px; height: 300px; }
+        }
+
+        .envelope {
+            position: relative;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, #4c0519, #7f1d1d);
+            border-radius: 4px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.9), inset 0 0 20px rgba(251, 191, 36, 0.2);
+            border: 2px solid var(--gold-dark);
+            cursor: pointer;
+        }
+        .envelope::before { /* Flap */
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: #7f1d1d;
+            clip-path: polygon(0 0, 100% 0, 50% 55%);
+            transform-origin: top;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 5;
+            border-bottom: 1px solid var(--gold-bright);
+        }
+        .envelope.open::before { transform: rotateX(180deg); }
+
+        .wax-seal {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -20%);
+            width: 70px; height: 70px;
+            background: radial-gradient(circle, #fcd34d, #b45309);
+            border-radius: 50%; z-index: 6;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5), 0 0 15px var(--gold-bright);
+            color: var(--royal-red); font-size: 1.8rem;
+            transition: 0.5s ease;
+        }
+        .envelope.open .wax-seal { opacity: 0; transform: translate(-50%, -20%) scale(0); }
+
+        /* --- Reveal Overlay --- */
+        #reveal-page {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            display: none; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 1s ease;
+        }
+
+        /* --- Central Card --- */
+        .royal-card {
+            background: #fffcf2; 
+            background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+            width: 92%; max-width: 700px;
+            padding: 25px; 
+            border: 4px double var(--gold-dark);
+            box-shadow: 0 0 150px rgba(251, 191, 36, 0.2);
+            position: relative;
+            max-height: 88vh; 
+            overflow-y: auto;
+            z-index: 50;
+            animation: cardPopup 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        @media (min-width: 768px) { .royal-card { padding: 40px; width: 90%; max-height: 85vh; } }
+
+        @keyframes cardPopup {
+            0% { transform: scale(0.5) translateY(100px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        /* --- PHOTO FRAMES (DESKTOP) --- */
+        .side-frame {
+            position: absolute; top: 50%; width: 220px; padding: 10px;
+            background: #fffcf2; border: 4px double var(--gold-dark);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8); z-index: 40;
+            display: none; opacity: 0;
+        }
+        .side-frame img { width: 100%; height: auto; display: block; border: 1px solid #ddd; filter: sepia(30%); }
+        @keyframes slideInLeft { from { opacity: 0; transform: translateY(-50%) translateX(-50px) rotate(-10deg); } to { opacity: 1; transform: translateY(-50%) translateX(0) rotate(-3deg); } }
+        @keyframes slideInRight { from { opacity: 0; transform: translateY(-50%) translateX(50px) rotate(10deg); } to { opacity: 1; transform: translateY(-50%) translateX(0) rotate(3deg); } }
+        
+        @media (min-width: 1200px) {
+            .side-frame { display: block; }
+            .frame-left { left: 5%; animation: slideInLeft 1.5s ease 0.5s forwards; }
+            .frame-right { right: 5%; animation: slideInRight 1.5s ease 0.5s forwards; }
+        }
+
+        /* --- MOBILE POLAROID (HORIZONTAL FIX) --- */
+        .mobile-photo-container { 
+            display: flex; 
+            flex-flow: row nowrap; /* Memaksa satu baris horizontal */
+            justify-content: center; 
+            gap: 15px; 
+            margin-bottom: 25px; 
+        }
+        .polaroid-mobile { 
+            background: white; 
+            padding: 6px 6px 18px 6px; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2); 
+            transform: rotate(-2deg); 
+            flex: 1; /* Mengisi ruang yang tersedia secara merata */
+            max-width: 160px; /* Batas maksimal agar tidak terlalu besar di tablet */
+            border: 1px solid #e5e7eb; 
+        }
+        .polaroid-mobile:nth-child(even) { transform: rotate(2deg) translateY(5px); } /* Sedikit variasi posisi */
+        .polaroid-mobile img { width: 100%; height: 130px; object-fit: cover; filter: sepia(20%); }
+
+        /* --- MUSIC PLAYER --- */
+        .music-control {
+            position: fixed; bottom: 20px; right: 20px; z-index: 2000;
+            width: 50px; height: 50px; background: var(--royal-red);
+            border: 2px solid var(--gold-bright); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; box-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+            transition: all 0.3s ease;
+        }
+        .music-icon { font-size: 24px; animation: spin 4s linear infinite; animation-play-state: paused; }
+        .music-control.playing .music-icon { animation-play-state: running; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* --- DECORATION & PARTICLES --- */
+        .corner-ornament { position: absolute; width: 50px; height: 50px; border: 4px double var(--gold-dark); opacity: 0.5; pointer-events: none; }
+        @media (min-width: 768px) { .corner-ornament { width: 60px; height: 60px; opacity: 0.6; } }
+        .c-tl { top: 15px; left: 15px; border-right: 0; border-bottom: 0; border-radius: 10px 0 0 0; }
+        .c-tr { top: 15px; right: 15px; border-left: 0; border-bottom: 0; border-radius: 0 10px 0 0; }
+        .c-bl { bottom: 15px; left: 15px; border-right: 0; border-top: 0; border-radius: 0 0 0 10px; }
+        .c-br { bottom: 15px; right: 15px; border-left: 0; border-top: 0; border-radius: 0 0 10px 0; }
+
+        /* Glitter Particles */
+        .glitter { position: fixed; width: 3px; height: 3px; background: var(--gold-bright); border-radius: 50%; pointer-events: none; z-index: 1500; animation: glitterFall linear forwards; }
+        @keyframes glitterFall {
+            0% { transform: translateY(-10vh) scale(0); opacity: 0; }
+            100% { transform: translateY(110vh) scale(1); opacity: 1; }
+        }
+
+        /* Music Note Particles (New Decoration) */
+        .music-particle {
+            position: fixed;
+            color: var(--gold-bright);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1400;
+            animation: floatUp linear forwards;
+            font-size: 20px;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.4; }
+            80% { opacity: 0.4; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        .active-reveal #reveal-page { display: flex; opacity: 1; }
+        .active-reveal #landing-scene { display: none; }
+        
+        .royal-card::-webkit-scrollbar { width: 6px; }
+        .royal-card::-webkit-scrollbar-track { background: #fffcf2; }
+        .royal-card::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="stage-bg"></div>
+    <div id="particle-box"></div>
+    <div id="music-particle-box"></div> <div class="music-control" id="musicBtn" onclick="toggleMusic()">
+        <div class="music-icon">💿</div>
+        <audio id="bgMusic" loop>
+            <source src="song.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <div id="landing-scene" class="fixed inset-0 flex flex-col items-center justify-center z-20">
+        <div class="text-center mb-12 px-6">
+            <h2 class="text-amber-500 tracking-[0.8em] text-xs font-bold uppercase mb-4 drop-shadow-lg">The Premiere</h2>
+            <h1 class="text-white text-5xl md:text-8xl font-serif italic mb-4">Aziziiii</h1>
+            <p class="font-romantic text-2xl md:text-4xl text-amber-300">A Symphony in 14 Movements</p>
+        </div>
+
+        <div class="envelope-wrapper" id="envelope-container">
+            <div class="envelope flex items-center justify-center" onclick="openMagic()">
+                <div class="wax-seal">🎼</div>
+                <div class="absolute inset-0 bg-[#320311] z-4" style="clip-path: polygon(0 40%, 50% 100%, 100% 40%, 100% 100%, 0 100%); border-radius: 0 0 4px 4px;"></div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-amber-600/20 text-6xl select-none font-serif">A & Z</div>
+            </div>
+        </div>
+        
+        <p class="mt-24 text-amber-400 text-xs tracking-[0.4em] uppercase animate-pulse">Tap the seal to unlock</p>
+    </div>
+
+    <div id="reveal-page">
+        
+        <div class="side-frame frame-left">
+            <img src="1.jpeg" alt="Foto Kiri">
+            <div class="text-center mt-2">
+                <p class="text-[10px] uppercase tracking-widest text-amber-800 font-bold">Happiness</p>
+            </div>
+        </div>
+
+        <div class="side-frame frame-right">
+            <img src="2.jpeg" alt="Foto Kanan">
+            <div class="text-center mt-2">
+                <p class="text-[10px] uppercase tracking-widest text-amber-800 font-bold">Future</p>
+            </div>
+        </div>
+
+        <div class="royal-card">
+           
+
+            <div class="relative z-10 px-2 md:px-8">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-6 pb-4 border-b-2 border-amber-200">
+                    <span class="text-xs font-bold tracking-[0.3em] text-amber-800 uppercase">Movement XIV</span>
+                    <span id="date-display" class="text-xs font-serif italic text-slate-500 mt-2 md:mt-0"></span>
+                </div>
+
+                <h2 class="text-3xl md:text-4xl font-serif mb-8 text-red-900 italic font-bold text-center md:text-left">Dearest Aziziiii,</h2>
+
+                <div class="mobile-photo-container block xl:hidden">
+                    <div class="polaroid-mobile">
+                        <img src="1.jpeg" alt="Us">
+                    </div>
+                    <div class="polaroid-mobile">
+                        <img src="2.jpeg" alt="Us">
+                    </div>
+                </div>
+
+                <div class="text-sm md:text-base leading-relaxed text-justify text-slate-900 font-serif mb-12 whitespace-pre-line px-1">
+1 Tahun 2 Bulan sudah kita lewati, tidak terkira lagi berapa banyak hal yang telah kita lalui. Banyak senang dan susah yang kita lalui dan membuat kita banyak belajar lagi. Aku selalu bersyukur telah bertemu bebeb dalam hidupku, kehadiran bebeb benar benar merubah hidupku, momen-momen yang kita lalui Bersama sangat memberi arti ke dalam hidupku. Terima kasih banyak telah memberi warna ke dalam kehidupanku yang gelap ini dan seluruh kontribusi yang bebeb berikan kepadaku.
+
+Dan Selama itu, aku masih jauh dari kata baik sebagai pasangan, banyak kesalahan aku perbuat dan itu jelas menyakiti bebeb, aku ingin meminta maaf kepada bebeb atas semua kesalahanku, aku meminta maaf atas kesalahan yang aku perbuat dan rasa sakit yang telah aku berikan ke bebeb. Namun, semua kesalahan itu, dengan diriku yang tidak tahu malu, aku akan selalu bilang, aku sayang bebeb.
+
+Walau banyak kesalahan yang telah aku lakukan, aku selalu mencintai bebeb. Mohon maaf harus bertemu diriku yang masih berusaha menyembuhkan luka di dalam dirinya dan bebeb harus terkena imbas rasa sakitnya. Aku ingin sembuh dan mencintai bebeb dengan lebih baik, mememberikan cinta yang pantas bebeb dapatkan. Perasaanku akan selalu mencintai bebeb seterusnya.
+
+Bebeb yang aku mau, yang aku inginkan, yang aku cari, kesempurnaan yang aku impikan sejak dulu dan aku mencintai bebeb tanpa syarat dan tanpa kompromi. Aku mencintai bebeb kemarin, sekarang, dan selamanya. Aku sayang dan cinta sama bebeb hidup dan matiku. Aku akan terus berusaha menjadi pasangan yang baik untuk bebeb dan memberi cinta yang penuh seperti yang bebeb pantas dapatkan. Terima kasih bebeb sudah mencintaiku dengan hidup dan mati bebeb, saling terus mencinta dan sembuh dari luka kita.
+
+Happy 14 Months anniversary, Aziziiii Tercintaaaaaaaaaa.
+14 Bulan kita telah lalui masih ada selamanya untuk kita jalani, sayang. Rintangan semakin sulit tapi Bersama bebeb aku yakin pasti bisa melewatinya.
+                </div>
+
+                <div class="pt-8 border-t-4 border-double border-amber-300 text-center pb-4">
+                    <div class="mb-6">
+                        <p class="text-[10px] tracking-[0.5em] text-amber-700 font-bold uppercase mb-2">Eternal Symphony</p>
+                        <h1 class="font-romantic text-4xl md:text-6xl text-red-900">Always Yours</h1>
+                        <p id="day-counter" class="text-xs font-serif italic text-amber-900 mt-4 tracking-[0.2em] font-bold">0 DAYS OF HARMONY</p>
+                    </div>
+                    
+                    <div class="flex flex-col items-center gap-6">
+                        <div class="flex gap-4 text-2xl">
+                            <span class="text-amber-500">🎻</span>
+                            <span class="text-amber-500">🎹</span>
+                            <span class="text-amber-500">🎻</span>
+                        </div>
+                        <button onclick="location.reload()" class="bg-red-950 text-amber-400 border border-amber-500 px-10 py-3 rounded-full text-[10px] uppercase tracking-[0.4em] hover:bg-red-900 transition-all shadow-[0_0_30px_rgba(76,5,25,0.5)]">
+                            Close ❤️
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. TANGGAL MULAI HUBUNGAN (Jadian) - Set ke Des 2024 agar hitungan hari benar
+        const startDate = new Date("2024-12-05");
+
+        // 2. TANGGAL YANG MUNCUL DI SURAT (Diset manual ke 6 Februari 2026)
+        const letterDate = new Date("2026-02-06");
+        document.getElementById('date-display').innerText = letterDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+        // --- MUSIC LOGIC ---
+        const audio = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                musicBtn.classList.add('playing');
+            } else {
+                audio.pause();
+                musicBtn.classList.remove('playing');
+            }
+        }
+
+        function openMagic() {
+            const env = document.querySelector('.envelope');
+            env.classList.add('open');
+            
+            audio.play().then(() => {
+                musicBtn.classList.add('playing');
+            }).catch(error => { console.log("Autoplay blocked"); });
+
+            setTimeout(() => {
+                document.body.classList.add('active-reveal');
+                startEffects();
+            }, 800);
+        }
+
+        function startEffects() {
+            startCounting();
+            startGlitterRain();
+        }
+
+        function startCounting() {
+            const today = new Date();
+            const diffDays = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+            let current = 0;
+            const interval = setInterval(() => {
+                current += Math.ceil(diffDays / 40);
+                if (current >= diffDays) {
+                    current = diffDays;
+                    clearInterval(interval);
+                }
+                document.getElementById('day-counter').innerText = current + " DAYS OF PURE HARMONY";
+            }, 30);
+        }
+
+        // --- PARTICLES (Glitter & Music Notes) ---
+        function createParticle(type) {
+            const container = type === 'glitter' ? document.getElementById('particle-box') : document.getElementById('music-particle-box');
+            const p = document.createElement('div');
+            
+            if (type === 'glitter') {
+                p.className = 'glitter';
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                p.style.opacity = Math.random();
+            } else {
+                p.className = 'music-particle';
+                const notes = ['♪', '♫', '♩', '♭', '♮'];
+                p.innerText = notes[Math.floor(Math.random() * notes.length)];
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.animationDuration = (Math.random() * 5 + 8) + 's'; // Lebih lambat
+                p.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            }
+            
+            container.appendChild(p);
+            setTimeout(() => p.remove(), (parseFloat(p.style.animationDuration) + 1) * 1000);
+        }
+
+        // Jalankan partikel terus menerus
+        setInterval(() => createParticle('glitter'), 150);
+        setInterval(() => createParticle('music'), 600); // Nada musik muncul lebih jarang
+
+        document.addEventListener('mousemove', (e) => {
+            if (!document.body.classList.contains('active-reveal')) {
+                const wrapper = document.getElementById('envelope-container');
+                const x = (window.innerWidth / 2 - e.pageX) / 35;
+                const y = (window.innerHeight / 2 - e.pageY) / 35;
+                wrapper.style.transform = `rotateX(${y}deg) rotateY(${-x}deg)`;
+            }
+        });
+    </script>
+</body>
+</html>
