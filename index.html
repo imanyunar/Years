@@ -41,21 +41,18 @@
             100% { background-position: 100% 100%; }
         }
 
-        /* --- Envelope & Effects --- */
+        /* --- Envelope --- */
         .envelope-wrapper {
             position: relative;
             width: 300px; height: 200px;
             transform-style: preserve-3d;
             transition: all 0.5s ease;
-            /* Efek Aura Berdenyut pada Wrapper */
             animation: envelopePulse 3s ease-in-out infinite;
         }
-
         @keyframes envelopePulse {
             0%, 100% { filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.3)); }
             50% { filter: drop-shadow(0 0 40px rgba(251, 191, 36, 0.6)); }
         }
-
         @media (min-width: 768px) {
             .envelope-wrapper { width: 450px; height: 300px; }
         }
@@ -124,40 +121,67 @@
         }
 
         /* --- PHOTO FRAMES (DESKTOP) --- */
-        .side-frame {
-            position: absolute; top: 50%; width: 220px; padding: 10px;
-            background: #fffcf2; border: 4px double var(--gold-dark);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8); z-index: 40;
-            display: none; opacity: 0;
-        }
-        .side-frame img { width: 100%; height: auto; display: block; border: 1px solid #ddd; filter: sepia(30%); }
-        @keyframes slideInLeft { from { opacity: 0; transform: translateY(-50%) translateX(-50px) rotate(-10deg); } to { opacity: 1; transform: translateY(-50%) translateX(0) rotate(-3deg); } }
-        @keyframes slideInRight { from { opacity: 0; transform: translateY(-50%) translateX(50px) rotate(10deg); } to { opacity: 1; transform: translateY(-50%) translateX(0) rotate(3deg); } }
-        
+        /* Hanya muncul di layar > 1200px */
         @media (min-width: 1200px) {
-            .side-frame { display: block; }
-            .frame-left { left: 5%; animation: slideInLeft 1.5s ease 0.5s forwards; }
-            .frame-right { right: 5%; animation: slideInRight 1.5s ease 0.5s forwards; }
+            .side-frame {
+                position: absolute;
+                top: 50%;
+                width: 220px;
+                padding: 10px;
+                background: #fffcf2;
+                border: 4px double var(--gold-dark);
+                box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+                z-index: 40;
+                display: block;
+                opacity: 0;
+            }
+            .side-frame img {
+                width: 100%; height: auto; display: block;
+                border: 1px solid #ddd; filter: sepia(30%);
+            }
+            /* DIGESER LEBIH KE TENGAH (10%) */
+            .frame-left { 
+                left: 10%; /* Semakin besar %, semakin geser ke kanan/tengah */
+                animation: slideInLeft 1.5s ease 0.5s forwards; 
+            }
+            .frame-right { 
+                right: 10%; /* Semakin besar %, semakin geser ke kiri/tengah */
+                animation: slideInRight 1.5s ease 0.5s forwards; 
+            }
         }
 
-        /* --- MOBILE POLAROID (HORIZONTAL FIX) --- */
+        @media (max-width: 1199px) { .side-frame { display: none !important; } }
+
+        /* Animasi Masuk Foto */
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateY(-50%) translateX(-50px) rotate(-10deg); }
+            to { opacity: 1; transform: translateY(-50%) translateX(0) rotate(-3deg); }
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateY(-50%) translateX(50px) rotate(10deg); }
+            to { opacity: 1; transform: translateY(-50%) translateX(0) rotate(3deg); }
+        }
+
+        /* --- MOBILE POLAROID (HORIZONTAL CENTERED) --- */
         .mobile-photo-container { 
             display: flex; 
-            flex-flow: row nowrap; /* Memaksa satu baris horizontal */
-            justify-content: center; 
+            flex-flow: row nowrap;
+            justify-content: center; /* Pastikan di tengah */
+            align-items: center;
+            width: 100%;
             gap: 15px; 
-            margin-bottom: 25px; 
+            margin-bottom: 25px;
+            margin-top: 10px;
         }
         .polaroid-mobile { 
             background: white; 
             padding: 6px 6px 18px 6px; 
             box-shadow: 0 4px 8px rgba(0,0,0,0.2); 
-            transform: rotate(-2deg); 
-            flex: 1; /* Mengisi ruang yang tersedia secara merata */
-            max-width: 160px; /* Batas maksimal agar tidak terlalu besar di tablet */
+            transform: rotate(-2deg);
+            width: 45%; max-width: 160px; 
             border: 1px solid #e5e7eb; 
         }
-        .polaroid-mobile:nth-child(even) { transform: rotate(2deg) translateY(5px); } /* Sedikit variasi posisi */
+        .polaroid-mobile:nth-child(even) { transform: rotate(2deg) translateY(5px); }
         .polaroid-mobile img { width: 100%; height: 130px; object-fit: cover; filter: sepia(20%); }
 
         /* --- MUSIC PLAYER --- */
@@ -173,7 +197,7 @@
         .music-control.playing .music-icon { animation-play-state: running; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* --- DECORATION & PARTICLES --- */
+        /* --- DECORATION --- */
         .corner-ornament { position: absolute; width: 50px; height: 50px; border: 4px double var(--gold-dark); opacity: 0.5; pointer-events: none; }
         @media (min-width: 768px) { .corner-ornament { width: 60px; height: 60px; opacity: 0.6; } }
         .c-tl { top: 15px; left: 15px; border-right: 0; border-bottom: 0; border-radius: 10px 0 0 0; }
@@ -181,27 +205,18 @@
         .c-bl { bottom: 15px; left: 15px; border-right: 0; border-top: 0; border-radius: 0 0 0 10px; }
         .c-br { bottom: 15px; right: 15px; border-left: 0; border-top: 0; border-radius: 0 0 10px 0; }
 
-        /* Glitter Particles */
         .glitter { position: fixed; width: 3px; height: 3px; background: var(--gold-bright); border-radius: 50%; pointer-events: none; z-index: 1500; animation: glitterFall linear forwards; }
         @keyframes glitterFall {
             0% { transform: translateY(-10vh) scale(0); opacity: 0; }
             100% { transform: translateY(110vh) scale(1); opacity: 1; }
         }
 
-        /* Music Note Particles (New Decoration) */
         .music-particle {
-            position: fixed;
-            color: var(--gold-bright);
-            opacity: 0;
-            pointer-events: none;
-            z-index: 1400;
-            animation: floatUp linear forwards;
-            font-size: 20px;
+            position: fixed; color: var(--gold-bright); opacity: 0; pointer-events: none; z-index: 1400; animation: floatUp linear forwards; font-size: 20px;
         }
         @keyframes floatUp {
             0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.4; }
-            80% { opacity: 0.4; }
+            20% { opacity: 0.4; } 80% { opacity: 0.4; }
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
@@ -217,7 +232,9 @@
 
     <div class="stage-bg"></div>
     <div id="particle-box"></div>
-    <div id="music-particle-box"></div> <div class="music-control" id="musicBtn" onclick="toggleMusic()">
+    <div id="music-particle-box"></div>
+
+    <div class="music-control" id="musicBtn" onclick="toggleMusic()">
         <div class="music-icon">💿</div>
         <audio id="bgMusic" loop>
             <source src="song.mp3" type="audio/mpeg">
@@ -259,7 +276,7 @@
         </div>
 
         <div class="royal-card">
-           
+       
 
             <div class="relative z-10 px-2 md:px-8">
                 <div class="flex flex-col md:flex-row justify-between items-center mb-6 pb-4 border-b-2 border-amber-200">
@@ -314,14 +331,10 @@ Happy 14 Months anniversary, Aziziiii Tercintaaaaaaaaaa.
     </div>
 
     <script>
-        // 1. TANGGAL MULAI HUBUNGAN (Jadian) - Set ke Des 2024 agar hitungan hari benar
         const startDate = new Date("2024-12-05");
-
-        // 2. TANGGAL YANG MUNCUL DI SURAT (Diset manual ke 6 Februari 2026)
         const letterDate = new Date("2026-02-06");
         document.getElementById('date-display').innerText = letterDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
 
-        // --- MUSIC LOGIC ---
         const audio = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicBtn');
 
@@ -338,11 +351,7 @@ Happy 14 Months anniversary, Aziziiii Tercintaaaaaaaaaa.
         function openMagic() {
             const env = document.querySelector('.envelope');
             env.classList.add('open');
-            
-            audio.play().then(() => {
-                musicBtn.classList.add('playing');
-            }).catch(error => { console.log("Autoplay blocked"); });
-
+            audio.play().then(() => { musicBtn.classList.add('playing'); }).catch(error => { console.log("Autoplay blocked"); });
             setTimeout(() => {
                 document.body.classList.add('active-reveal');
                 startEffects();
@@ -368,11 +377,9 @@ Happy 14 Months anniversary, Aziziiii Tercintaaaaaaaaaa.
             }, 30);
         }
 
-        // --- PARTICLES (Glitter & Music Notes) ---
         function createParticle(type) {
             const container = type === 'glitter' ? document.getElementById('particle-box') : document.getElementById('music-particle-box');
             const p = document.createElement('div');
-            
             if (type === 'glitter') {
                 p.className = 'glitter';
                 p.style.left = Math.random() * 100 + 'vw';
@@ -383,17 +390,15 @@ Happy 14 Months anniversary, Aziziiii Tercintaaaaaaaaaa.
                 const notes = ['♪', '♫', '♩', '♭', '♮'];
                 p.innerText = notes[Math.floor(Math.random() * notes.length)];
                 p.style.left = Math.random() * 100 + 'vw';
-                p.style.animationDuration = (Math.random() * 5 + 8) + 's'; // Lebih lambat
+                p.style.animationDuration = (Math.random() * 5 + 8) + 's';
                 p.style.fontSize = (Math.random() * 20 + 15) + 'px';
             }
-            
             container.appendChild(p);
             setTimeout(() => p.remove(), (parseFloat(p.style.animationDuration) + 1) * 1000);
         }
 
-        // Jalankan partikel terus menerus
         setInterval(() => createParticle('glitter'), 150);
-        setInterval(() => createParticle('music'), 600); // Nada musik muncul lebih jarang
+        setInterval(() => createParticle('music'), 600);
 
         document.addEventListener('mousemove', (e) => {
             if (!document.body.classList.contains('active-reveal')) {
